@@ -1,164 +1,172 @@
 <!-- PROJECT LOGO -->
-<br />
+<br/>
 <p align="center">
-  <a href="https://git.swissphone.com/libraries/cpp/mioty-ep-miotyduino20/-/tree/master">
-    <img src="https://radiocrafts.com/wp-content/uploads/2020/04/mioty-logo-617x207.png" alt="Logo" width="330" height="120">
+  <a href="https://github.com/swionrdhw/miotyduino20-lib-releases">
+    <img src="mioty-logo-617x207.png" alt="Logo" width="330" height="120">
   </a>
 
   <h3 align="center">miotyduino20-lib</h3>
-    
+
   <p align="center">
     Library to capture the MIOTYDuino20 Board into one object.
   </p>
 </p>
 
-
-# MIOTYDuino20 Library
+# 1. MIOTYDuino20 Library
 <!-- TABLE OF CONTENTS -->
 <details open="open">
-    <ol>
-        <li><a href="#description">Description</a></li>
-        <li><a href="#dependencies">Dependencies</a></li>
-        <li><a href="#getting-started">Getting Started</a></li>
-        <li><a href="#example">Example</a></li>
-        <li><a href="#serial-overview">Serial overview</a></li>
-        <li><a href="#methods">Methods</a></li>
-        <ul>
-            <li><a href="#3v3-aux">AUX 3V3</a></li>
-            <li><a href="#step-up-5v">Step Up 5V</a></li>
-            <li><a href="#leds">LED's</a></li>
-                <ul>
-                    <li><a href="#red-led">Red LED</a></li>
-                    <li><a href="#green-led">Green LED</a></li>
-                    <li><a href="#blue-led">Blue LED</a></li>
-                    <li><a href="#toggle-led">Toggle LED('s)</a></li>
-                </ul>
-            <li><a href="#read-battery-voltage">Read Battery Voltage</a></li>
-            <li><a href="#read-analog-pin">Read Analog Pin</a></li>
-            <li><a href="#read-button">Read the Button</a></li>
-            <li><a href="#sleep">Sleep</a></li>
-            <li><a href="#read-hardware-index">Get Hardware Index</a></li>
-            <li><a href="#digital-pins">Digital pins</a></li>
-            <li><a href="#update-bidistamp-firmware">Update BidiStamp Firmware</a></li>
-        </ul>
-        <li><a href="#application-layer-payload-format">Application layer payload format</a></li>
-        <li><a href="#license">License</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ol>
+
+- [1. MIOTYDuino20 Library](#1-miotyduino20-library)
+- [2. Dependencies](#2-dependencies)
+- [3. Description](#3-description)
+- [4. Getting Started](#4-getting-started)
+- [5. Example](#5-example)
+  - [5.1. Open Example](#51-open-example)
+  - [5.2. Usage Examples](#52-usage-examples)
+- [6. Serial overview](#6-serial-overview)
+- [7. Defined Pins](#7-defined-pins)
+- [8. Functions](#8-functions)
+  - [8.1. MIOTYDuino20 Constructor](#81-miotyduino20-constructor)
+  - [8.2. Init mYON](#82-init-myon)
+  - [8.3. Use mYON function](#83-use-myon-function)
+  - [8.4. 3V3 AUX](#84-3v3-aux)
+  - [8.5. Step Up 5V](#85-step-up-5v)
+  - [8.6. LEDs](#86-leds)
+    - [8.6.1. Red LED](#861-red-led)
+    - [8.6.2. Green LED](#862-green-led)
+    - [8.6.3. Blue LED](#863-blue-led)
+    - [8.6.4. Toggle LED](#864-toggle-led)
+  - [8.7. Read Battery Voltage](#87-read-battery-voltage)
+  - [8.8. Read Analog Pin](#88-read-analog-pin)
+  - [8.9. Read Button](#89-read-button)
+  - [8.10. Sleep](#810-sleep)
+  - [8.11. Digital Pins](#811-digital-pins)
+  - [8.12. m.YON mode selection](#812-myon-mode-selection)
+- [9. Application layer payload format](#9-application-layer-payload-format)
+- [10. License](#10-license)
+- [11. Contact](#11-contact)
+
 </details>
 
-## Dependencies
+# 2. Dependencies
+
 - [Arduino IDE](https://www.arduino.cc/en/software)
-- [mioty-ep-at-lib](https://git.swissphone.com/libraries/cpp/mioty-ep-at-lib)
+- [mioty-ep-at-lib](https://github.com/swionrdhw/mioty-ep-at-lib-releases)
 - [STM32LowPower](https://github.com/stm32duino/STM32LowPower/archive/master.zip)
 - [STM32RTC](https://github.com/stm32duino/STM32RTC/archive/refs/heads/master.zip)
 
-## Description
----
+# 3. Description
 
-This Arduino library is mainly made for fast Prototyping with the MIOTYDuino20 B board. The MIOTYDuino20 object represents the board. 
+This Arduino library is mainly made for fast Prototyping with the MIOTYDuino20 B board. The MIOTYDuino20 object represents the board with all default peripherals.
 
 On initialization the object configures the MIOTYDuino20, so everything is turned off and with correct handling there shall not be a possibility of a short circuit on a pin.
 
 Additionally the object has methods for managing the standard functions of the board, like the 3.3 Volt regulator or the reading of the battery voltage.
 
-The class inherits from the HardwareSerial class and is automatically to the STlink USART (to PC) connected. All default HardwareSerial functionalities are usable with this class.
+The class inherits from the HardwareSerial class and is automatically to the STLink USART (to PC) connected. All default HardwareSerial functionalities are usable with this class.
 
-For the bidi-stamp is an [MIOTY_EP](https://git.swissphone.com/libraries/cpp/mioty-ep-at-lib) object inside the class available.
+For the mYON is an [MIOTY_EP](https://github.com/swionrdhw/mioty-ep-at-lib-releases) object inside the class available.
 
+# 4. Getting Started
 
-## Getting Started
----
-To setup the hardware/software environment and to programm the first example on the MIOTYDuino, read: [Getting-Started-MIOTYDuino20](https://www.swissphone.com/download-item/60823).
+To setup the hardware/software environment and to program the first example on the MIOTYDuino, read: [Getting-Started-MIOTYDuino20](https://www.swissphone.com/download-item/60823).
 
-## Example
----
-### Open Example
+# 5. Example
+
+## 5.1. Open Example
+
 1. To open an example in Arduino IDE, open File>Examples>MIOTYDuino20
 2. Select the example you'd like to open.
 
-### Use Examples
-We will go through the [Blink](examples/Blink/Blink.ino) example to show how to use this library.
+## 5.2. Usage Examples
 
-Firstly, the Library has to be included into the sketch and create an instance of MIOTYDuino20 created.
+This part will go through the [Blink](examples/Blink/Blink.ino) example, to show how to use this library.
 
-If your MIOTYDuino has been delivered with an EUI, you can use the default constructor.
+Firstly, the Library has to be included into the sketch and an instance of MIOTYDuino20 created.
 
 ```cpp
 #include "MIOTYDuino20"
 
 MIOTYDuino20 myDuino();
 ```
-Otherwise you should give the Constructor the details for the connection.
+
+Inside the the setup function, first initialize the m.YON.
+If the m.YON has been delivered with an EUI, short and networkkey, the default initialization function can be called.
 
 ```cpp
-#include "MIOTYDuino20"
-
-#define EUI "your EUI"
-#define NETKEY "your Networkkey"
-#define SHORT "short from the EUI"
-
-MIOTYDuino20 myDuino(EUI,SHORT,NETKEY);
+void setup(){
+  /*init m.YON*/
+  myDuino.mYON.init();
 ```
 
-Inside the the setup function, to test if the BidiStamp is connected.
+Otherwise it is recommended to set the EUI/shortaddress/networkkey via the string option of the init function.
 
 ```cpp
-/*Test if BiDi-Stamp is avalable*/
-if(!myDuino.BidiStamp.isAlive()){
+#define EUI "your EUI"
+#define NWK "your Networkkey"
+#define SHORT "short from the EUI"
+
+void setup(){
+  /*init mYON*/
+  myDuino.mYON.init(EUI, SHORT, NETKEY);
+```
+
+To test if the m.YON was connected in the initialization connected the wasAlive function can be called.
+
+```cpp
+/*Test if mYON is available*/
+if(!myDuino.mYON.wasAlive()){
     /*... print information*/
-    myDuino.println("BidiStamp not connected");
+    myDuino.println("mYON not connected");
 }
 ```
 
-For demonstration, in the loop function toggle the RGB LED on and of with the 
+For demonstration, in the loop function toggle the RGB LED on and of with the
 the [toggleLED](#toggle-led) function.
 
-To toggle all colors of the RGB LED we give the value `4` as an parameter to the function.
+To toggle all colors of the RGB LED we give no parameter to the function.
 
 ```cpp
 /*toggle all LEDs*/
-myDuino.toggleLED(4);
+myDuino.toggleLED();
 ```
 
 To make the toggle even visible to the human eye, we need a sleep statement.
-As an alternative to the sleep function from the library, the delay function is also possible.
+As an alternative to the sleep function from the library, the standard Arduino delay function is also possible.
 
 ```cpp
 /*deep sleep for 100ms*/
 myDuino.sleep(100);
 ```
 
-## Serial overview
----
+# 6. Serial overview
 
 The MIOTYDuino20 class inherits from the HardwareSerial and creates a Serial connection to the PC over the STLink on the UART1.
 
-It also establishes a Serial connection to the BidiStamp over the UART3 by having a MIOTY_EP object member.
+It also establishes a Serial connection to the m.YON over the UART3 by having a MIOTY_EP object member. this baudrate changes to 115200 if the m.YON is in the bootloader mode.
 
-```cpp
-MIOTY_EP BidiStamp = MIOTY_EP(MIOTY_USART3_RX,MIOTY_USART3_TX);
-```
-
-Both communications have a 9600 baudrate and support the default [Serial](https://www.arduino.cc/reference/en/language/functions/communication/serial/) functions.
+The Serial connection to the PC has a default 115200 baudrate and supports all standard [Serial](https://www.arduino.cc/reference/en/language/functions/communication/serial/) functions.
 
 **Example to pc (over STLink)**:
+
 ```cpp
 myDuino.println("Hallo Welt");
 String stringFromPC = myDuino.readString();
 ```
 
-**Example to BidiStamp**:
+**Example to m.YON**:
+
 ```cpp
-myDuino.BidiStamp.print("ATI\r");
+myDuino.mYON.print("ATI\r");
 String BidiInformation = myDuino.readString();
 ```
 
 *Serial Over USB*:
---- 
+
+---
 It is possible to use the SerialUSB witch is implemented in the default Arduino environment.
 
-To enable the communication add the following lines on to the end of the `SystemClock_Config` function in the `variant.cpp` file (C:/Users/<username>/AppData/Local/Arduino15/packages/STM32/hardware/stm32/1.9.0/variants/NUCLEO_L452RE/)
+To enable the communication add the following lines on to the end of the `SystemClock_Config` function in the `variant.cpp` file (C:/Users/"user_name"/AppData/Local/Arduino15/packages/STM32/hardware/stm32/1.9.0/variants/NUCLEO_L452RE/)
 
 ```cpp
 //////////////////////////////////////////////////////////////////////////
@@ -181,6 +189,7 @@ To enable the communication add the following lines on to the end of the `System
 Inside the Arduino IDE the Upload method has to be changed to CDC (generic 'Serial' supersede U(S)ART)
 
 Usage example:
+
 ```cpp
 SerialUSB.begin(115200);
 SerialUSB.println("Hello from USB");
@@ -190,83 +199,208 @@ After the Upload the mioty duino will connect with the USB on a different COM po
 
 USB Serial is not used by this library, but user can add it to run side by side with other serial ports.
 
-It's not recommended to use the USB serial for an BidiStamp firmware update, because the estimated update time is around 3.5 hours.
+It's not recommended to use the USB serial for an m.YON firmware update, because the estimated update time is around 3.5 hours.
 
-## Methods
+# 7. Defined Pins
+
+All pins of the miotyDuino20 board are defined in the `MIOTYDuino20_B_Pins.h`.
+
+**List of defined pins and description:**
+
+| Pin Name                |Pin description                                                        |
+|-------------------------|-----------------------------------------------------------------------|
+| `H_3V3_AUX_EN`          |   Enable pin of external 3V3 output (high active)                     |
+| `L_5V_STEP_UP_EN`       |   Enable pin of 5V stepup converter (low active)                      |
+| `L_BIDI_RST`            |   Reset pin of m.YON (low active)                                 |
+| `MIKRO_RST`             |   Reset pin of the MikroBUS                                           |
+| `GROVE_A0`              |   Analog pin of of the MikroBUS                                       |
+| `GROVE_A1`              |   Not connected / Analog input                                        |
+| `GROVE_A2`              |   I/O 1 pin of of the Grove connector #3                              |
+| `GROVE_A3`              |   I/O 2 pin of of the Grove connector #3                              |
+| `A4`                    |   Analog Input pin                                                    |
+| `A5`                    |   Analog Input pin                                                    |
+| `D15`                   |   Digital output pin                                                  |
+| `D14`                   |   Digital output pin                                                  |
+| `MIKRO_SPI_SCK_D13`     |   MikroBUS SPI clock pin                                              |
+| `MIKRO_SPI_MISO_D12`    |   MikroBUS SPI master in slave out pin                                |
+| `MIKRO_SPI_MOSI_D11`    |   MikroBUS SPI master out slave in pin                                |
+| `SPI_AUX_CS_D10`        |   MikroBUS SPI chip select pin                                        |
+| `D9`                    |   Digital output pin                                                  |
+| `USART1_TX_D8`          |   Digital output pin or USART #1 transmit pin                         |
+| `D7`                    |   Digital output pin                                                  |
+| `D6`                    |   Digital output pin                                                  |
+| `D5`                    |   Digital output pin                                                  |
+| `D4`                    |   Digital output pin                                                  |
+| `D3`                    |   Digital output pin                                                  |
+| `USART1_RX_D2`          |   Digital output pin or USART #1 receive pin                          |
+| `USART2_TX_D1`          |   Digital output pin or USART #2 transmit pin                         |
+| `USART2_RX_D0`          |   Digital output pin or USART #1 receive pin                          |
+| `H_OC1_EN`              |   Open collector transistor #1 enable pin (high active)               |
+| `H_OC2_EN`              |   Open collector transistor #2 enable pin (high active)               |
+| `BUTTON`                |   On board button input pin                                           |
+| `LED_RED`               |   Red segment of on board RGB LED                                     |
+| `LED_GREEN`             |   Green segment of on board RGB LED                                   |
+| `LED_BLUE`              |   Blue segment of on board RGB LED                                    |
+| `BATT_DIVIDER_EN`       |   Enable of battery voltage divider (to measure the battery voltage)  |
+| `MIOTY_USART3_TX`       |   Transmit pin from m.YON                                         |
+| `SPI_MIOTY_CS`          |   Chip select of m.YON                                            |
+
+# 8. Functions
+
+Short description and intended use of all functions from this library.
+
+## 8.1. MIOTYDuino20 Constructor
+
+The Constructor initializes the Serial communication to the PC with the default baudrate of 115200 if no other baudrate is given.
+
+Additionally the constructor defines all in-/output pins.
+
+default as Output:
+
+- all LED's (undef.)
+- 3.3V enable pin (HIGH)
+- Battery measuring enable pin (LOW)
+- Pin for 5V stepup (HIGH)
+- Opencollector 1&2 (LOW)
+- Hardware index enable (LOW)
+
+default as Input:
+
+- Button
+- Battery lvl reading pin
+- Hardware index reading pin
+- digital I/O's
+- Analog Pins
+
+```cpp
+MIOTYDuino20(long baudrate/*= DEFAULT_BAUDRATE*/)
+```
+
+***Takes:***
+
+- `baudrate`: baudrate of serial to STLink (optional)
+
+## 8.2. Init mYON
+
 ---
-Short description and intended use of all methods from this library.
-### 3V3 AUX
+The function calls the init function of the m.YON.
+This can take about 6s.
+
+If the EUI, ShortAddress and Networkkey should be changed, the information can be given to the function.
+
+**If only the Networkkey should be changed, the `setNetworkkey` function from the mioty-at-ep-lib should be called**.
+
+***Note:*** The m.YON is not usable until it is initialized.
+
+```cpp
+void mYON.init(String EUI /*= ""*/, 
+              String SHORT /*= ""*/, 
+              String NWK /*= ""*/)
+```
+
+***Takes:***
+
+- `EUI`: Endpoint EUI64 (eg. "5C335CF667340010") (optional)
+- `SHORT`: Short 2-Byte representation of EUI64 (eg. "0010")(optional)
+- `NWK`: Network key (eg. "9ee5e6d365b04679e21bd34146aa5ea1")(optional)
+
+## 8.3. Use mYON function
+
+---
+To use function from [mioty-ep-at-lib](https://github.com/swionrdhw/mioty-ep-at-lib-releases) there has to be a mYON in front of the function call.
+
+See example:
+
+```cpp
+bool mYON.isAlive();
+```
+
+## 8.4. 3V3 AUX
+
 ---
 For the 3.3V regulator for peripherals, is a method for enabling and disabling of the regulator available.
 
-The 3.3V regulator is by default disabled.
+The 3.3V regulator is by default enabled.
 
 ```cpp
-void AUX_3V3(bool state)
+void external3V3(bool state)
 ```
 
 **Takes**:
+
 - `state`: 1/true/HIGH for enable and 0/false/LOW for disable
 
-**Retruns**:
-- Nothing
+## 8.5. Step Up 5V
 
-### Step Up 5V
 ---
-
-For enabling/disabling of the 5V step-up converter. This method is useless if the MIOTYDuino20 Board is on a Micro-USB. Because this method then get overwritten by the Hardware.
+For enabling/disabling of the 5V step-up converter. This method is useless if the MIOTYDuino20 Board is on a Micro-USB. Because this method gets overwritten by the Hardware.
 
 ```cpp
-void Step_Up_5V(bool state)
+void external5V(bool state)
 ```
+
 **Takes**:
+
 - `state`: 1/true/HIGH for enable and 0/false/LOW for disable
 
-**Retruns**:
-- Nothing
+## 8.6. LEDs
 
-
-### LEDs
 ---
 There is one RGB LED on the board. each LED can be turned turned on or off.
 For each LED color exists one digital function and for all together one toggle function.
 
-#### Red LED
+### 8.6.1. Red LED
+
 ---
+
 ```cpp
 void redLED(int state)
 ```
+
 **Takes**:
+
 - `state`: the state of the LED (HIGH/LOW or 1/0 or true/false)
 
-#### Green LED
+### 8.6.2. Green LED
+
 ---
+
 ```cpp
 void greenLED(int state)
 ```
+
 **Takes**:
+
 - `state`: the state of the LED (HIGH/LOW or 1/0 or true/false)
-#### Blue LED
+
+### 8.6.3. Blue LED
+
 ---
+
 ```cpp
 void blueLED(int state)
 ```
+
 **Takes**:
+
 - `state`: the state of the LED (HIGH/LOW or 1/0 or true/false)
 
-#### Toggle LED
+### 8.6.4. Toggle LED
+
 One or all LED's can be toggled.
 
 ```cpp
 void toggleLED(int LED)
 ```
+
 **Takes**:
-- `LED`: number for LED (1: red, 2:green, 3:blue, 4/default:all)
+
+- `LED`: number for LED (LED_RED, LED_GREEN, LED_BLUE, default:all)
 
 ***Note***: if its an unknown number the function toggles all LED's
 
+## 8.7. Read Battery Voltage
 
-### Read Battery Voltage
 ---
 The MIOTYDuino20 is able to read the voltage of it's battery.
 For this function the Hardware-Voltage divider gets activated and after a 100ms waiting period the value gets read via the `analogRead` function from the Arduino extension.
@@ -274,24 +408,29 @@ For this function the Hardware-Voltage divider gets activated and after a 100ms 
 ```cpp
 float readBatteryVoltage()
 ```
+
 **Returns**:
+
 - `float`: Voltage value in Volts.
 
 It has a resolution of 3.22mV and the voltage gets calculated with the formula:
 
 ```math
-\frac{2*[read value]} {1024.0} * 3.3
-``` 
+\frac{2*[read value]} {1024.0} * 3.3V
+```
 
-### Read Analog Pin
+## 8.8. Read Analog Pin
+
 ---
-There are 6 analog pins available. 
+There are 6 analog pins available.
 Only those 6 pins can be read by this function.
 
 ```cpp
 int readAnalog(int pin)
 ```
+
 **Takes**:
+
 - `pin`: an integer representation of the pin.
 
 For the integer are defines from the *MIOTYDuino20_B_Pins.h* available.
@@ -305,113 +444,127 @@ The possible defines are:
 5. `A5`
 
 **Returns**:
+
 - `int`: read 5-Bit (0-1024) value from the ADC.
 
 If an invalid pin is given, the method return -1.
 
-### Read Button
+## 8.9. Read Button
+
 ---
 This function reads the digital value from the Button.
+
  ```cpp
 bool readButton()
  ```
+
 **Returns**:
+
 - `bool`: true if the Button is pressed and false otherwise.
 
-### Sleep
+## 8.10. Sleep
+
 ---
 As an alternative to the delay function. It's possible to use the sleep method of this module. this method puts the MIOTYDuino20 in to the deep sleep mode for the given amount of milliseconds.
+This reduces power consumption during downtime
 
-**Important**: This method puts the MIOTYDuino20 immediately in deep sleep mode. 
-all independent actions (like println) will be interrupted, until the MIOTYDuino wakes up again. additionally while the MIOTYDuino is in deep sleep, no data over Serial communication can be received.
-This can cause undefined behavior in independent actions.
+**Important**:
+Actions like print/println will be [flushed](https://www.arduino.cc/reference/de/language/functions/communication/serial/flush/) before the MIOTYDuino20 enters sleep mode. additionally while the MIOTYDuino20is in  sleep, no data over Serial communication can be received.
+This can cause undefined behavior in interrupt depended function.
 
 ```cpp
 void sleep(int ms)
 ```
 
 **Takes**:
+
 - `ms`: sleep time in milliseconds
 
-**Note**: For this function is the STM32LowPower Library necessary.
+**Note**: This function does sometimes not work properly.
+Use delay as a workaround.
 
-### Read Hardware Index
----
-***NOT IMPLEMENTED YET***
+## 8.11. Digital Pins
 
-### Digital Pins
 ---
 
-#### General
 The defined pin names are:
 
 0. `USART2_RX_D0`
-0. `USART2_TX_D1`
-0. *reserved*
-0. `D3`
-0. `D4`
-0. `D5`
-0. `D6`
-0. `D7`
-0. *reserved*
-0. `D9`
-0. `SPI_AUX_CS_D10`
-0. `MIKRO_SPI_MOSI_D11` 
-0. `MIKRO_SPI_MISO_D12`
-0. `MIKRO_SPI_SCK_D13`
-0. `D14`
-0. `D15`
+1. `USART2_TX_D1`
+2. *reserved*
+3. `D3`
+4. `D4`
+5. `D5`
+6. `D6`
+7. `D7`
+8. *reserved*
+9. `D9`
+10. `SPI_AUX_CS_D10`
+11. `MIKRO_SPI_MOSI_D11`
+12. `MIKRO_SPI_MISO_D12`
+13. `MIKRO_SPI_SCK_D13`
+14. `D14`
+15. `D15`
 
-**Note**: The digital IO's  `D2` and `D8` are used for the serial communication to the PC (over STLink).
+**Note**: The digital IOs  `D2` and `D8` are used for the serial communication to the PC (over STLink).
 
-#### Read
-The 16 digital IO's can be read as true or false (1/0 or HIGH/LOW).
+The 16 digital IOs can be read as true or false (1/0 or HIGH/LOW).
 Like the [analogRead](#read-analog-pin) method, does this method read only those 16 pins.
 
-```cpp
-bool readDigitalIO(int pin)
-```
-
-**Takes**:
-- `pin`: defined pin number.
-
-**Returns**:
-- `bool`: True if the Voltage level is HIGH and false otherwise.
-
-If the pin number is invalid the method returns false regardless of the pins voltage level.
-
-**Note**: When this function is called, the respective pin will automatically changed to an *INPUT*.
-
-### Write
 The digital IO's can also be written as digital HIGH or LOW.
 The output voltage is 3.3V.
 
 ```cpp
-void writeDigitalIO(int pin,bool state)
+bool digitalIO(int pin,int state = -1);
 ```
+
 **Takes**:
+
 - `pin`: defined pin number.
-- `state`: output state of IO (true/false or HIGH/LOW or 1/0).
+- `state`: HIGH, LOW or -1 (default -1).
 
-### Update BidiStamp Firmware
+**Returns**:
+
+- `bool`: True if the Voltage level is HIGH or the output was set successfully.
+          False if the Voltage was LOW or the pin doesn't exist.
+
+If the pin number is invalid the method returns false regardless of the pins voltage level.
+
+**Note**: When a pin is set with this function it gets set as output.
+
+## 8.12. m.YON mode selection
+
 ---
-The BidiStamp can be update over UART with the XModem protocol.
-This Library provides a default entrence into an update mode on boot up.
+The m.YON can be update over UART with the XModem protocol.
+Additionally a serial tunneling mode exists as well.
+This Library provides a default entrance into both modes during boot up.
 
-To enter the BidiStamp update mode, hold down the button during boot up until the blue LED starts blinking.
+**To select the m.YON mode, hold down the button during boot up until the LED starts blinking in purple.**
 
-After the button has been released the blue LED stops blinking. And the Serial tunneling starts.
+After the button has been released, the LED stops blinking and the miotyduino waits 5 seconds.
 
-This will set the serial interface baudrate to the bootloader baudrate and the mioty Duino passes all serial data from the PC (over STLink) directly to the BidiStamp and vice versa.
+During the selection process the led blinks in the color of the currently selected mode.
 
-If the update mode got entered correctly, the BidiStamp sends every second a "C" over the serial interface.
+- `red LED`: the duino exits the mode selection and initialize normally.
+- `blue LED`: enters the update mode for a firmware update.
+- `green LED`: Serial Tunneling (direct access to the m.YON over the UART).
 
-This mode can be exited via a the button.
+As an alternative the software update function can be used to enter the update mode:
 
-For a more detailed instruction on How to update the BidiStamp follow the [update guide](!!link-hier-einfügen!!).
+```cpp
+void enterMiotyModuleUpdateMode();
+```
 
-## Application layer payload format
----
+This will set the serial interface baudrate to the bootloader baudrate and the mioty Duino passes all serial data from the PC (over STLink) directly to the m.YON and vice versa.
+
+If the update mode got entered correctly, the m.YON sends every second a "C" over the serial interface.
+
+This mode can be exited via the button or automatically after an XModem file has been sent.
+
+For a more detailed instruction on How to update the m.YON follow the [update guide](https://www.swissphone.com/download-item/61943).
+
+# 9. Application layer payload format
+
 The mioty Application Center has the option to add a payload format which allows automatic processing of uplink data.
 
 This allows to send and decode different length of payload with one endpoint.
@@ -479,14 +632,10 @@ for example, the MIOTY_BME280 example uses the "5c335cf982b21f6b" application la
 }
 ```
 
-## Licence
----
+# 10. License
 
-## Contact
----
+# 11. Contact
 
-Tendai Rondof - [tendai.rondof@swissphone.com](tendai.rondof@swissphone.com)
+Mioty Team - [mioty@swissphone.com](mioty@swissphone.com)
 
-Christian Gwerder - [christian.gwerder@swissphone.com](christian.gwerder@swissphone.com)
-
-Project Link: [https://git.swissphone.com/libraries/cpp/miotyduino20-lib](https://git.swissphone.com/libraries/cpp/miotyduino20-lib)
+Project Link: [https://github.com/swionrdhw/miotyduino20-lib-releases](https://github.com/swionrdhw/miotyduino20-lib-releases)
